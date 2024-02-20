@@ -2,7 +2,7 @@ import {
   GoogleGenerativeAI,
   HarmBlockThreshold,
   HarmCategory,
-} from "@google/generative-ai";
+} from "../generative-ai-js";
 import { env } from "../utils";
 import { HttpsProxyAgent } from "https-proxy-agent";
 import logger from "../logger";
@@ -103,6 +103,7 @@ const formatResult = (content = "") => {
 export async function withAiAnalysis(content: string) {
   try {
     // For text-only input, use the gemini-pro model
+    logger.info("AI analysis start");
     const model = genAI.getGenerativeModel(
       {
         model: "gemini-pro",
@@ -119,18 +120,18 @@ export async function withAiAnalysis(content: string) {
         ],
       },
       {
-        agent:
-          env.NODE_ENV === "development" && env.LOCAL_FETCH_PROXY
-            ? new HttpsProxyAgent(env.LOCAL_FETCH_PROXY)
-            : undefined,
-      } as any
+        timeout: 10000,
+      }
     );
+
+    logger.info("AI analysis start");
 
     const prompt = hiringAbstractPrompt + content;
 
     const result = await model.generateContent(prompt);
     const response = result.response;
     const text = response.text();
+    logger.info(`AI analysis end: ${text}`);
     if (!text) {
       throw new Error(`招聘摘要生成失败, 响应内容为空`);
     }
