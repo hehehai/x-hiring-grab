@@ -376,10 +376,10 @@ export async function ruanyfDataCapture() {
         continue;
       }
 
-      logger.info(`[RUANYF] 保持文章到数据库 ${article.id}`);
+      logger.info(`[RUANYF] 保持文章到数据库 ${articleId}`);
       const articleData = await db.job.create({
         data: {
-          originSite: "ELE_DUCK",
+          originSite: "RUANYF",
           originId: articleId,
           originUrl: article.html_url,
           originTitle: data.title,
