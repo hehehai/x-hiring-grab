@@ -1,6 +1,7 @@
+import fetch from "node-fetch";
+import { Octokit } from "@octokit/core";
 import { RUANYF_OWNER, RUANYF_REPO, RUANYF_TITLE_PREFIX } from "../constants";
 import logger from "../../lib/logger";
-import { Octokit } from "@octokit/core";
 import { env } from "../../lib/utils";
 
 export interface User {
@@ -45,6 +46,9 @@ export interface RuanyfIssue {
 // https://github.com/octokit/core.js#readme
 const octokit = new Octokit({
   auth: env.GITHUB_TOKEN,
+  request: {
+    fetch,
+  },
 });
 
 export async function ruanyfListRoute() {
