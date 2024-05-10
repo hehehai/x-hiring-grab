@@ -10,7 +10,7 @@ import {
   v2exDetailRoute,
   v2exListRoute,
 } from "./routes/v2ex";
-import { randomInt, sleep } from "../lib/utils";
+import { getFullTags, randomInt, sleep } from "../lib/utils";
 import {
   filterAvailableTags,
   isAvailableCategory,
@@ -145,6 +145,7 @@ const v2exDataCapture = async () => {
           originUserAvatar: article.authorAvatar,
           title: analysis.title,
           tags: filterAvailableTags(analysis.tags),
+          fullTags: getFullTags(analysis.title, analysis.tags),
           generatedContent: analysis.content,
           generatedAt: new Date(),
         },
@@ -279,6 +280,7 @@ const eleDuckDataCapture = async () => {
           originUserAvatar: article.authorAvatar,
           title: analysis.title,
           tags: filterAvailableTags(analysis.tags),
+          fullTags: getFullTags(analysis.title, analysis.tags),
           generatedContent: analysis.content,
           generatedAt: new Date(),
         },
@@ -389,6 +391,7 @@ export async function ruanyfDataCapture() {
           originUserAvatar: article.user.avatar_url,
           title: analysis.title,
           tags: filterAvailableTags(analysis.tags),
+          fullTags: getFullTags(analysis.title, analysis.tags),
           generatedContent: analysis.content,
           generatedAt: new Date(),
         },
