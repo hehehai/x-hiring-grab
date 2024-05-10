@@ -1,9 +1,9 @@
 // 每次读取 10 条数据， 分页请求， 条件： 有效、fullTags 为空
 // 分析每个 job 的 fullTags， 更新到数据库
 
-import { db } from "@actijob/db";
 import { getFullTags } from "../lib/utils";
 import logger from "../lib/logger";
+import { db } from "../lib/db";
 
 async function update() {
   logger.info(`Start update: fullTags...`);
@@ -25,7 +25,7 @@ async function update() {
           title: true,
           tags: true,
         },
-        take: 3200,
+        take: 20,
       };
       if (lastCursor) {
         params.cursor = {
